@@ -1,0 +1,136 @@
+.login-bg {
+  background-image: url("./assets/img/login-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh;
+}
+
+.login-bg-container {
+  background: white;
+  background-image: url("./assets/img/login-container-bg.png");
+  background-repeat: no-repeat;
+  background-size: 500px;
+  width: 600px;
+  height: 540px;
+}
+
+.h540 {
+  height: 540px;
+}
+
+.overlay-scrollbar > .os-scrollbar-horizontal {
+  margin: 0 auto;
+  bottom: 26px;
+  width: 20%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+}
+
+.vp-desktop {
+  margin: 0 auto;
+  max-width: 1300px;
+  min-width: 1300px;
+}
+
+.nav-b-rounded {
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+
+.max-w-4xl {
+  max-width: 58rem /* 768px */;
+}
+
+.login-remember > [type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='black' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+  border: 1px solid black;
+}
+
+.login-remember > [type="checkbox"]:hover {
+  border: 1px solid black;
+}
+
+.title-login {
+  font-size: 46px;
+}
+
+.bottom--20 {
+  bottom: -20px;
+}
+
+.create-equipment > [type="radio"]:checked {
+  background: #9649cb;
+  border: 2px solid black;
+}
+
+.left-custom-alert-btn {
+  left: 500px;
+}
+
+.alert-success-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  z-index: 1000000;
+  background: rgba(255, 255, 255, 0.7);
+  width: 100vw;
+  height: 100vh;
+}
+
+.alert-success {
+  border-radius: 30px;
+  background: red;
+  background: linear-gradient(70deg, #ef233c, #ff4b33);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding: 40px 80px 40px 80px;
+  text-align: center;
+  color: white;
+  flex-direction: column;
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.px72 {
+  width: 72px;
+  height: 72px;
+}
+
+.zdown {
+  z-index: -1;
+}
+
+.sw-container {
+  background: red;
+}
+
+.sw-confirm {
+  background-color: #9649cb !important;
+  padding-top: 12px !important;
+}
+
+.sw-cancel {
+  background-color: #c3c6ca !important;
+  padding-top: 12px !important;
+}
+
+.sw-title {
+  margin-top: 10px !important;
+  font-size: 24px !important;
+}
+
+.sw-html {
+  margin-bottom: -4px !important;
+}
+
+select.select-align-center {
+  text-align-last:center;
+  direction: rtl;
+}

@@ -1,0 +1,1 @@
+export const states = ["En servicio", "Fuera de servicio por mantenimiento", "Fuera de servicio por afectaciones externas", "Siniestrado", "Fuera de servicio por disponibilidad de refaccionamiento", "En avería"]
