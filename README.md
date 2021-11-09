@@ -1,17 +1,17 @@
-# PROYECO FRONT END
+# PROYECO ADMIN DASHBOARD
 
-Ejecutar el siguiente comando para instalar las dependencias.
+Run the following command to install the dependencies.
 > yarn
 
-Configurar las variables globales en /src/config.js
+Set global variables in /src/config.js
 
-Ejecutar yarn build para generar la version optimizadada para producción.
+Run yarn build to generate the production optimized version.
 > yarn build
 
-Subir los archivos generados en la carpeta build, a su servidor de producción.
+Upload the generated files in the build folder to your production server.
 
 ```js
-yarn // Instalar dependencias
-yarn start // Levantar un servidor de desarrollo
-npm run buid // Crea el directorio build con una compilación para producción
+yarn // install dependencies
+yarn start // build a development server
+npm run buid // create the build directory with a build for production
 ```
