@@ -253,8 +253,7 @@ const EquipmentCreate = (props) => {
         toast.error("Error al cargar el equipo!");
       }
     }
-        toast.dismiss(toastLoading);
-    toast.error("Verificar datos!");
+      toast.dismiss(toastLoading);
   };
 
   const [refreshEstacion, setRefreshEstacion] = useState("");

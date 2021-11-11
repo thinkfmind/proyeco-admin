@@ -251,7 +251,6 @@ const EquipmentCreate = () => {
       }
     }
     toast.dismiss(toastLoading);
-    toast.error("Verificar datos!");
   };
 
   const [refreshEstacion, setRefreshEstacion] = useState("");
