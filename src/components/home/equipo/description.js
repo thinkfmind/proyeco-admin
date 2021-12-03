@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import Noimg from "../../../assets/img/noimg.png";
 import useFetch from "../../../hooks/useFetch";
 import { getYear, getMonth } from "date-fns";
-import {backendUrl, s3BucketUrl} from '../../../config'
+import { backendUrl, s3BucketUrl } from "../../../config";
 
 const yearNow = getYear(new Date());
 
@@ -54,6 +54,15 @@ const Description = ({ id, closeHandler, hidex }) => {
     setImg3(Noimg);
   };
 
+  const msToHMS = (ms) => {
+    let seconds = ms / 1000;
+    const hours = parseInt(seconds / 3600);
+    seconds = seconds % 3600;
+    const minutes = parseInt(seconds / 60);
+    seconds = seconds % 60;
+    alert(hours + ":" + minutes);
+  };
+
   const consult = async (source) => {
     const res = await axios.get(`${backendUrl}/equipo/${id}`, {
       cancelToken: source.token,
@@ -65,6 +74,7 @@ const Description = ({ id, closeHandler, hidex }) => {
     const dif = Date.now() - date.getTime();
     const days = Math.round(dif / 86400000);
     res.data.updatedAt = days;
+    res.data.updateHours = date.getTime();
     setData(res.data);
 
     setImg1(res.data.imagenUno);
@@ -93,10 +103,7 @@ const Description = ({ id, closeHandler, hidex }) => {
 
   const handleClickDownloadHistorico = () => {
     if (data.historico) {
-      window.open(
-        `${s3BucketUrl}/${data.historico}`,
-        "_blank"
-      );
+      window.open(`${s3BucketUrl}/${data.historico}`, "_blank");
     }
   };
 
@@ -259,7 +266,7 @@ const Description = ({ id, closeHandler, hidex }) => {
           >
             {data.estado}
             <span className="text-sm text-black font-objetive-regular">
-              {data.funciona ? "" : ` · ${data.updatedAt} dias inactivo`}
+              {data.funciona ? "" : ` · ${data.updatedAt} dias inactivo ${data.updateHours}`}
             </span>
           </h4>
           <div className="grid grid-cols-3 mb-3 gap-x-6">

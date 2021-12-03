@@ -12,9 +12,9 @@ const HorizontalList = (props) => {
   const scrolx = useRef(null);
 
   const scrolls = (e) => {
-    if (e.x) {
-      setScrollOnViewport(!scrollOnViewport);
-    }
+    // if (e.x) {
+    //   setScrollOnViewport(!scrollOnViewport);
+    // }
   };
 
   const getScroll = () => {
