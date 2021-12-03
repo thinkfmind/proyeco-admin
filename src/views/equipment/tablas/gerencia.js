@@ -14,6 +14,11 @@ const Table = ({ data, pagination, maxCantRow, changeData, role }) => {
   const userSelector = useSelector((store) => store.user);
 	const isEmpresa = userSelector.user.role === "Empresa"
   const [empresas, setEmpresas] = useState([]);
+  const [filtroEmpresa, setFiltroEmpresa] = useState(null);
+  const [filtroTipo, setFiltroTipo] = useState(null);
+  const [filtroLinea, setFiltroLinea] = useState(null);
+  const [filtroEstado, setFiltroEstado] = useState(null);
+
   const { response: responseEquipo } = useFetch({
     url: `${backendUrl}/equipo/${isEmpresa ? `empresa/${userSelector.user.id}` : ""}`,
     options: {
@@ -41,26 +46,100 @@ const Table = ({ data, pagination, maxCantRow, changeData, role }) => {
     },
     initData: [],
   });
-  console.log(responseEquipo)
-  const handleFilterTable = ({ selectValue, property, date }) => {
+
+  const handleFilterTable = (property, value) => {
     let dataFiltered = responseEquipo;
-    if (selectValue || (date?.start && date?.end)) {
-      dataFiltered = [...responseEquipo].filter((equipo) => {
-        const value = getValue(property, equipo);
-        const equipDate = new Date(value);
-        if (date?.start && date?.end) {
-          if (compareAsc(equipDate, date.start.setHours(0, 0, 0, 0)) === -1) {
-            return false;
-          }
-          if (compareAsc(date.end.setHours(23, 59, 59), equipDate) === -1) {
-            return false;
-          }
-          return true;
+
+    if (filtroEmpresa || property === 'Empresa') {
+      if(property === 'Empresa') {
+        if(value !== 'blank') {
+          dataFiltered = [...dataFiltered].filter((equipo) => {
+            return equipo.empresa.name === value;
+          });
         }
-        return value === selectValue;
-      });
+      } else {
+        if(filtroTipo !== 'blank') {
+          dataFiltered = [...dataFiltered].filter((equipo) => {
+            return equipo.empresa.name === filtroEmpresa;
+          });
+        }
+      }
+    }
+
+    if (filtroTipo || property === 'Tipo') {
+      if(property === 'Tipo') {
+        if(value !== 'blank') {
+          dataFiltered = [...dataFiltered].filter((equipo) => {
+            return equipo.tipo === value;
+          });
+        }
+      } else {
+        if(filtroTipo !== 'blank') {
+          dataFiltered = [...dataFiltered].filter((equipo) => {
+            return equipo.tipo === filtroTipo;
+          });
+        }
+      }
+    }
+
+    if (filtroLinea || property === 'Linea') {
+      if(property === 'Linea') {
+        if(value !== 'blank') {
+          dataFiltered = [...dataFiltered].filter((equipo) => {
+            return equipo.linea.id === value;
+          });
+        }
+      } else {
+        if(filtroLinea !== 'blank') {
+          dataFiltered = [...dataFiltered].filter((equipo) => {
+            return equipo.linea.id === filtroLinea;
+          });
+        }
+      }
+      
+    }
+
+    if (filtroEstado || property === 'Estado') {
+      if(property === 'Estado') {
+        if(value !== 'blank') {
+          dataFiltered = [...dataFiltered].filter((equipo) => {
+            return equipo.estado === value;
+          });
+        }
+      } else {
+        if(filtroEstado !== 'blank') {
+          dataFiltered = [...dataFiltered].filter((equipo) => {
+            return equipo.estado === filtroEstado;
+          });
+        }
+      }
+
     }
     changeData(dataFiltered);
+  };
+
+  const handleFiltroEstado = (value) => {
+    const val = value ? value : 'blank';
+    setFiltroEstado(val);
+    handleFilterTable('Estado', val);
+  };
+
+  const handleFiltroEmpresa = (value) => {
+    const val = value ? value : 'blank';
+    setFiltroEmpresa(val);
+    handleFilterTable('Empresa', val);
+  };
+
+  const handleFiltroTipo = (value) => {
+    const val = value ? value : 'blank';
+    setFiltroTipo(val);
+    handleFilterTable('Tipo', val);
+  };
+
+  const handleFiltroLinea = (value) => {
+    const val = value ? value : 'blank';
+    setFiltroLinea(val);
+    handleFilterTable('Linea', val);
   };
 
   useEffect(() => {
@@ -87,12 +166,7 @@ const Table = ({ data, pagination, maxCantRow, changeData, role }) => {
         {role === "Gerente" ? (
           <div className="flex items-center">
             <select
-              onChange={(e) =>
-                handleFilterTable({
-                  selectValue: e.target.value,
-                  property: "empresa.name",
-                })
-              }
+              onChange={(e) => handleFiltroEmpresa(e.target.value)}
               className="pl-0 text-sm text-center border-none font-objetive-bold text-app-green-3 hover:cursor-pointer"
             >
               <option value="">Empresa a cargo</option>
@@ -108,12 +182,7 @@ const Table = ({ data, pagination, maxCantRow, changeData, role }) => {
         ) : null}
         <div className="flex items-center">
           <select
-            onChange={(e) =>
-              handleFilterTable({
-                selectValue: e.target.value,
-                property: "tipo",
-              })
-            }
+            onChange={(e) => handleFiltroTipo(e.target.value)}
             className={`text-sm text-center border-none font-objetive-bold text-app-green-3 hover:cursor-pointer ${role === 'Gerente' ? '' : 'pl-0'}`}
           >
             <option value="">Tipo</option>
@@ -128,12 +197,7 @@ const Table = ({ data, pagination, maxCantRow, changeData, role }) => {
         </div>
         <div className="flex items-center">
           <select
-            onChange={(e) =>
-              handleFilterTable({
-                selectValue: e.target.value,
-                property: "linea.id",
-              })
-            }
+            onChange={(e) => handleFiltroLinea(e.target.value)}
             className="text-sm text-center border-none font-objetive-bold text-app-green-3 hover:cursor-pointer"
           >
             <option value="">Línea</option>
@@ -149,12 +213,7 @@ const Table = ({ data, pagination, maxCantRow, changeData, role }) => {
         </div>
         <div className="flex items-center">
           <select
-            onChange={(e) =>
-              handleFilterTable({
-                selectValue: e.target.value,
-                property: "estado",
-              })
-            }
+            onChange={(e) => handleFiltroEstado(e.target.value)}
             className="text-sm text-center truncate border-none w-60 font-objetive-bold text-app-green-3 hover:cursor-pointer"
           >
             <option value="">Estado de equipo</option>

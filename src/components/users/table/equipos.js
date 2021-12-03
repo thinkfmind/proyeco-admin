@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import Row from "./row";
 import useFetch from "../../../hooks/useFetch";
 import { states } from "../../../helpers/equipment";
-import { getValue } from "../../../helpers/table";
+// import { getValue } from "../../../helpers/table";
 import "react-datepicker/dist/react-datepicker.css";
 import { backendUrl } from "../../../config";
 import { tiposEquipos } from "../../../helpers/staticData";
@@ -138,7 +138,7 @@ const Table = ({ data, pagination, maxCantRow, changeData, sendToTrash }) => {
         return equipo;
       });
     } else {
-      if(filtroStart !== 'blank' && filtroEnd !== 'blank') {
+      if(filtroStart && filtroEnd && filtroStart !== 'blank' && filtroEnd !== 'blank') {
         dataFiltered = [...dataFiltered].filter((equipo) => {
           const equipDate = new Date(equipo.createdAt);
           if (compareAsc(equipDate, filtroStart.setHours(0, 0, 0, 0)) === -1) {

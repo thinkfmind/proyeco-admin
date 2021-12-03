@@ -58,9 +58,7 @@ const Description = ({ id, closeHandler, hidex }) => {
     let seconds = ms / 1000;
     const hours = parseInt(seconds / 3600);
     seconds = seconds % 3600;
-    const minutes = parseInt(seconds / 60);
-    seconds = seconds % 60;
-    alert(hours + ":" + minutes);
+    return hours
   };
 
   const consult = async (source) => {
@@ -74,7 +72,7 @@ const Description = ({ id, closeHandler, hidex }) => {
     const dif = Date.now() - date.getTime();
     const days = Math.round(dif / 86400000);
     res.data.updatedAt = days;
-    res.data.updateHours = date.getTime();
+    res.data.updateHours = Date.now() - date.getTime();
     setData(res.data);
 
     setImg1(res.data.imagenUno);
@@ -106,6 +104,11 @@ const Description = ({ id, closeHandler, hidex }) => {
       window.open(`${s3BucketUrl}/${data.historico}`, "_blank");
     }
   };
+
+  const dateFormat = (d) =>{
+    const dat = new Date(d);
+    return dat.getDate() + "/"+ dat.getMonth()+ "/" +dat.getFullYear();
+  }
 
   useEffect(() => {
     let source = axios.CancelToken.source();
@@ -266,7 +269,8 @@ const Description = ({ id, closeHandler, hidex }) => {
           >
             {data.estado}
             <span className="text-sm text-black font-objetive-regular">
-              {data.funciona ? "" : ` · ${data.updatedAt} dias inactivo ${data.updateHours}`}
+            {/* ${data.updatedAt} dias inactivo ${msToHMS(data.updateHours)} horas inactivo */}
+              {data.funciona ? "" : ` · ${msToHMS(data.updateHours) > 24 ? `${data.updatedAt} dias inactivo` : `${msToHMS(data.updateHours)} horas inactivo`}`}
             </span>
           </h4>
           <div className="grid grid-cols-3 mb-3 gap-x-6">
@@ -320,7 +324,7 @@ const Description = ({ id, closeHandler, hidex }) => {
                     className="pt-2 mt-2 space-y-1 border-t border-gray-400"
                   >
                     <h5 className="font-objetive-medium">{actividad.tipo}</h5>
-                    <p className="text-xs">Fecha de registro - 17/07/2021</p>
+                    <p className="text-xs">Fecha de registro - {dateFormat(actividad.createdAt)}</p>
                     <p className="text-xs">
                       {actividad.dias} {actividad.dias === 1 ? "día" : "días"}{" "}
                       parado en reparación

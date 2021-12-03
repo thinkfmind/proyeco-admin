@@ -113,7 +113,7 @@ const Navbar = ({ title, subtitle, searchValue = "", handleClickSearch }) => {
 
         <div className="inline-flex items-center">
           <div className="w-10 h-10 overflow-hidden rounded-full">
-            <img src={ProfileImage} className="w-10 h-10" alt="profile" />
+            <img src={userSelector.user.picture ? userSelector.user.picture : ProfileImage} className="w-10 h-10" alt="profile" />
           </div>
           <div className="ml-5 mr-10">
             <span className="font-objetive-regular">Bienvenido,</span>
