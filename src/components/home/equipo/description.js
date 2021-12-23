@@ -58,7 +58,16 @@ const Description = ({ id, closeHandler, hidex }) => {
     let seconds = ms / 1000;
     const hours = parseInt(seconds / 3600);
     seconds = seconds % 3600;
-    return hours
+    const minutes = parseInt(seconds / 60);
+    seconds = seconds % 60;
+    return hours + ":" + minutes;
+  };
+
+  const msToHH = (ms) => {
+    let seconds = ms / 1000;
+    const hours = parseInt(seconds / 3600);
+    seconds = seconds % 3600;
+    return hours;
   };
 
   const consult = async (source) => {
@@ -70,6 +79,10 @@ const Description = ({ id, closeHandler, hidex }) => {
     });
     const date = new Date(res.data.updatedAt);
     const dif = Date.now() - date.getTime();
+
+    const timespan = 2568370873;
+    msToHMS(timespan);
+
     const days = Math.round(dif / 86400000);
     res.data.updatedAt = days;
     res.data.updateHours = Date.now() - date.getTime();
@@ -105,10 +118,10 @@ const Description = ({ id, closeHandler, hidex }) => {
     }
   };
 
-  const dateFormat = (d) =>{
+  const dateFormat = (d) => {
     const dat = new Date(d);
-    return dat.getDate() + "/"+ dat.getMonth()+ "/" +dat.getFullYear();
-  }
+    return dat.getDate() + "/" + dat.getMonth() + "/" + dat.getFullYear();
+  };
 
   useEffect(() => {
     let source = axios.CancelToken.source();
@@ -269,8 +282,16 @@ const Description = ({ id, closeHandler, hidex }) => {
           >
             {data.estado}
             <span className="text-sm text-black font-objetive-regular">
-            {/* ${data.updatedAt} dias inactivo ${msToHMS(data.updateHours)} horas inactivo */}
-              {data.funciona ? "" : ` · ${msToHMS(data.updateHours) > 24 ? `${data.updatedAt} dias inactivo` : `${msToHMS(data.updateHours)} horas inactivo`}`}
+              {/* ${data.updatedAt} dias inactivo ${msToHMS(data.updateHours)} horas inactivo */}
+              {data.funciona
+                ? ""
+                : ` · ${
+                    msToHH(data.updateHours) > 24
+                      ? `${data.updatedAt} dias, ${msToHMS(
+                          Math.abs(data.updatedAt * 24 * 3600000 - data.updateHours)
+                        )} H:M`
+                      : `${msToHMS(data.updateHours)} H:M`
+                  }`}
             </span>
           </h4>
           <div className="grid grid-cols-3 mb-3 gap-x-6">
@@ -324,7 +345,9 @@ const Description = ({ id, closeHandler, hidex }) => {
                     className="pt-2 mt-2 space-y-1 border-t border-gray-400"
                   >
                     <h5 className="font-objetive-medium">{actividad.tipo}</h5>
-                    <p className="text-xs">Fecha de registro - {dateFormat(actividad.createdAt)}</p>
+                    <p className="text-xs">
+                      Fecha de registro - {dateFormat(actividad.createdAt)}
+                    </p>
                     <p className="text-xs">
                       {actividad.dias} {actividad.dias === 1 ? "día" : "días"}{" "}
                       parado en reparación
